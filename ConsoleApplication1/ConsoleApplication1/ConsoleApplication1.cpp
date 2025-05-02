@@ -1,8 +1,27 @@
 #include <iostream>
 using namespace std;
 
+class DiningHall {
+
+public:
+    DiningHall(){}
+    void print()const;
+    void seth(int);
+    void setn(string);
+    void seta(string);
+    void setc(int);
+    int geth()const;
+    string getn()const;
+    string geta()const;
+    int getc()const;
+
+private:
+    int hall_id;
+    string name;
+    string address;
+    int capacity;
+};
 class Meal;
-class DiningHall;
 class Reservation;
 class Student {
 public:
@@ -34,6 +53,8 @@ private:
     bool is_active;
 
 };
+
+
 int main()
 {
     
