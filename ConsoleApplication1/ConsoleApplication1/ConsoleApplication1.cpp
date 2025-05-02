@@ -1,15 +1,19 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 
+enum meal_type{};
 class DiningHall {
 
 public:
     DiningHall(){}
     void print()const;
+
     void seth(int);
     void setn(string);
     void seta(string);
     void setc(int);
+
     int geth()const;
     string getn()const;
     string geta()const;
@@ -21,12 +25,38 @@ private:
     string address;
     int capacity;
 };
-class Meal;
+class Meal {
+
+public:
+    
+    Meal(){}
+    void print()const;
+    void update_price(float);
+    void add_side_item(string);
+    
+    void setmi(int);
+    void setn(string);
+    void setp(float);
+    void setmt(string);
+
+    int getmi()const;
+    string getn()const;
+    float getp()const;
+    string getmt()const;
+    string geti()const;
+    
+private:
+    int meal_id;
+    string name;
+    float price;
+    enum meal_type;
+    vector<string> side_items;
+};
 class Reservation;
 class Student {
 public:
     Student() {}
-    void print();
+    void print()const;
     void reserve_meal(Meal);
     bool cancel_reservation(Reservation);
 
@@ -37,12 +67,12 @@ public:
     void setb(float);
     void seta(bool);
 
-    int getui();
-    string getsi();
-    string getn();
-    string gete();
-    float getb();
-    bool geta();
+    int getui()const;
+    string getsi()const;
+    string getn()const;
+    string gete()const;
+    float getb()const;
+    bool geta()const;
 
 private:
     int user_id;
