@@ -1,8 +1,9 @@
 #include <iostream>
 #include <vector>
+#include <time.h>
 using namespace std;
 
-enum meal_type{};
+enum Meal_type{breakfast,lunch,dinner};
 class DiningHall {
 
 public:
@@ -25,6 +26,38 @@ private:
     string address;
     int capacity;
 };
+void DiningHall::print()const{
+    cout << geth() << '\t'
+        << getn() << '\t'
+        << geta() << '\t'
+        << getc() << '\t';
+}
+void DiningHall::seth(int h) {
+    hall_id = h;
+}
+void DiningHall::setn(string n) {
+    name = n;
+}
+void DiningHall::seta(string a){
+    address = a;
+}
+void DiningHall::setc(int c) {
+    capacity = c;
+}
+int DiningHall::geth()const {
+    return hall_id;
+}
+string DiningHall::getn()const {
+    return name;
+}
+string DiningHall::geta()const{
+    return address;
+}
+int DiningHall::getc()const {
+    return capacity;
+}
+
+
 class Meal {
 
 public:
@@ -38,12 +71,13 @@ public:
     void setn(string);
     void setp(float);
     void setmt(string);
+    void setitem(string);
 
     int getmi()const;
     string getn()const;
     float getp()const;
-    string getmt()const;
-    string geti()const;
+    Meal_type getMeal_type(int)const;
+    string geti(int)const;
     
 private:
     int meal_id;
@@ -52,7 +86,100 @@ private:
     enum meal_type;
     vector<string> side_items;
 };
-class Reservation;
+void Meal::print()const {
+    cout << getmi() << '\t'
+        << getn() << '\t'
+        << getp() << '\t';
+
+        
+}
+void Meal::update_price(float p) {
+    cout << "Enter new price:";
+    cin >> price;
+    setp(price);
+}
+void Meal::add_side_item(string i) {
+    setitem(i);
+}
+void Meal::setmi(int m) {
+    if (m > 0)
+        meal_id = m;
+    else{
+
+        cout << "your id is invalid,"
+            << "try again";
+    }
+}
+void Meal::setn(string n) {
+    name = n;
+}
+void Meal::setp(float p) {
+    if (p >= 0)
+        price = p;
+    else
+        cout << "price is invalid";
+}
+void Meal::setmt(string m) {
+    
+}
+void Meal::setitem(string m) {
+
+}
+int Meal::getmi()const {
+    return meal_id;
+}
+string Meal::getn()const {
+    return name;
+}
+float Meal::getp()const {
+    return price;
+}
+Meal_type Meal::getMeal_type(int n)const {
+    switch (n)
+    {
+    case 1:return breakfast;
+        break;
+
+    case 2:return lunch;
+        break;
+
+    case 3:return dinner;
+        break;
+
+    default:cout << "invalid";
+        break;
+    }
+}
+string Meal::geti(int n)const {
+    return side_items[n];
+}
+
+
+class Reservation {
+
+public:
+    Reservation(){}
+    void print()const;
+    bool cancel();
+
+    void setri(int);
+    void sets(Student);
+    void setdh(DiningHall);
+    void setm(Meal);
+    void settime(time_t);
+
+    int getri()const;
+    
+
+private:
+    int reservation_id;
+    Student student;
+    DiningHall dhall;
+    Meal mael;
+    enum status;
+    time_t created_at;
+
+};
 class Student {
 public:
     Student() {}
@@ -81,6 +208,7 @@ private:
     string email;
     float balance;
     bool is_active;
+    vector<Reservation> reservation;
 
 };
 
