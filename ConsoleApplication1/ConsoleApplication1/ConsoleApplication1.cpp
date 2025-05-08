@@ -3,7 +3,8 @@
 #include <time.h>
 using namespace std;
 
-enum Meal_type{breakfast,lunch,dinner};
+enum Meal_type { breakfast, lunch, dinner };
+enum Status { FAILED, CANCELLED, SUCCESS };
 class DiningHall {
 
 public:
@@ -163,23 +164,74 @@ public:
     bool cancel();
 
     void setri(int);
-    void sets(Student);
-    void setdh(DiningHall);
-    void setm(Meal);
-    void settime(time_t);
+    void sets(Student&);
+    void setdh(DiningHall&);
+    void setm(Meal&);
+    void settime(time_t&);
 
     int getri()const;
-    
+    Status getstatus(int)const;
+    time_t gettime()const;
 
 private:
     int reservation_id;
     Student student;
     DiningHall dhall;
-    Meal mael;
+    Meal meal;
     enum status;
     time_t created_at;
 
 };
+void Reservation::print()const {
+    cout << getri() << '\t';
+    student.print();
+    dhall.print();
+    meal.print();
+    cout << gettime() << '\n';
+}
+bool Reservation::cancel() {
+    if (getstatus(0) == CANCELLED)
+        return true;
+    return false;
+}
+void Reservation::setri(int r) {
+    reservation_id = r;
+}
+void Reservation::sets(Student& s) {
+    student = s;
+}
+void Reservation::setdh(DiningHall& d) {
+    dhall = d;
+}
+void Reservation::setm(Meal& m) {
+    meal = m;
+}
+void Reservation::settime(time_t& t) {
+    created_at = t;
+}
+int Reservation::getri()const {
+    return reservation_id;
+}
+Status Reservation::getstatus(int n)const {
+    switch (n)
+    {
+    case 1:return FAILED;
+        break;
+
+    case 2:return CANCELLED;
+        break;
+
+    case 3:return SUCCESS;
+        break;
+
+    default:cout << "invalid";
+        break;
+    }
+}
+time_t Reservation::gettime()const {
+    return created_at;
+}
+
 class Student {
 public:
     Student() {}
@@ -211,6 +263,7 @@ private:
     vector<Reservation> reservation;
 
 };
+
 
 
 int main()
