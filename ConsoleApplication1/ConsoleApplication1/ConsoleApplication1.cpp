@@ -3,8 +3,9 @@
 #include <time.h>
 using namespace std;
 
-enum Meal_type { breakfast, lunch, dinner };
-enum Status { FAILED, CANCELLED, SUCCESS };
+class Student;
+enum Meal_type { Breakfast, Lunch, Dinner };
+enum Status { Failed, Cancelled, Success };
 
 
 class DiningHall {
@@ -32,9 +33,9 @@ public:
 };
 void DiningHall::print()const{
     cout << getHall_Id() << '\t'
-        << getn() << '\t'
-        << geta() << '\t'
-        << getc() << '\t';
+        << getName() << '\t'
+        << getAddress() << '\t'
+        << getCapacity() << '\t';
 }
 void DiningHall::setHall_Id(int hall) {
     hall_id = hall;
@@ -153,13 +154,13 @@ float Meal::getPrice()const {
 Meal_type Meal::getMeal_type(int n)const {
     switch (n)
     {
-    case 1:return breakfast;
+    case 1:return Breakfast;
         break;
 
-    case 2:return lunch;
+    case 2:return Lunch;
         break;
 
-    case 3:return dinner;
+    case 3:return Dinner;
         break;
 
     default:cout << "invalid";
@@ -175,21 +176,10 @@ void Meal::getItem()const {
 
 class Reservation {
 
-public:
-    Reservation(){}
-    void print()const;
-    bool cancel();
-
-    void setri(int);
-    void sets(Student&);
-    void setdh(DiningHall&);
-    void setm(Meal&);
-    void settime(time_t&);
-
-    int getri()const;
-    Status getstatus(int)const;
-    time_t gettime()const;
-
+    friend void setStudent(Student&, Reservation&);
+    friend void setDiningHall(DiningHall&, Reservation &);
+    friend void setMeal(Meal&, Reservation&);
+    friend void setTime(time_t&, Reservation&);
 private:
     int reservation_id;
     Student student;
@@ -198,54 +188,66 @@ private:
     enum status;
     time_t created_at;
 
+public:
+    Reservation(){}
+    void print()const;
+    bool cancel();
+
+    void setReservation_Id(int);
+
+    int getReservation_Id()const;
+    Status getStatus(int)const;
+    time_t getTime()const;
+
+
 };
 void Reservation::print()const {
-    cout << getri() << '\t';
+    cout << getReservation_Id() << '\t';
     student.print();
     dhall.print();
-    meal.print();
-    cout << gettime() << '\n';
+    meal.print(7);
+    cout << getTime() << '\n';
 }
 bool Reservation::cancel() {
-    if (getstatus(0) == CANCELLED)
+    if (getStatus(0) == Cancelled)
         return true;
     return false;
 }
-void Reservation::setri(int r) {
+void Reservation::setReservation_Id(int r) {
     reservation_id = r;
 }
-void Reservation::sets(Student& s) {
-    student = s;
+void setStudent(Student& s, Reservation& R) {
+    R.student = s;
 }
-void Reservation::setdh(DiningHall& d) {
-    dhall = d;
+void setDiningHall(DiningHall& d, Reservation& R) {
+    R.dhall = d;
 }
-void Reservation::setm(Meal& m) {
-    meal = m;
+void setMeal(Meal& m, Reservation& R) {
+    R.meal = m;
 }
-void Reservation::settime(time_t& t) {
-    created_at = t;
+void setTime(time_t& t, Reservation& R) {
+    R.created_at = t;
 }
-int Reservation::getri()const {
+int Reservation::getReservation_Id()const {
     return reservation_id;
 }
-Status Reservation::getstatus(int n)const {
+Status Reservation::getStatus(int n)const {
     switch (n)
     {
-    case 1:return FAILED;
+    case 1:return Failed;
         break;
 
-    case 2:return CANCELLED;
+    case 2:return Cancelled;
         break;
 
-    case 3:return SUCCESS;
+    case 3:return Success;
         break;
 
     default:cout << "invalid";
         break;
     }
 }
-time_t Reservation::gettime()const {
+time_t Reservation::getTime()const {
     return created_at;
 }
 
