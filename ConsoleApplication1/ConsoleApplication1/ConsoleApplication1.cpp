@@ -5,6 +5,8 @@ using namespace std;
 
 enum Meal_type { breakfast, lunch, dinner };
 enum Status { FAILED, CANCELLED, SUCCESS };
+
+
 class DiningHall {
 
 private:
@@ -62,48 +64,50 @@ int DiningHall::getCapacity()const {
 
 class Meal {
 
-public:
-    
-    Meal(){}
-    void print()const;
-    void update_price(float);
-    void add_side_item(string);
-    
-    void setmi(int);
-    void setn(string);
-    void setp(float);
-    void setmt(string);
-    void setitem(string);
-
-    int getmi()const;
-    string getn()const;
-    float getp()const;
-    Meal_type getMeal_type(int)const;
-    string geti(int)const;
-    
 private:
     int meal_id;
     string name;
     float price;
     enum meal_type;
     vector<string> side_items;
+
+public:
+    Meal(){}
+    void print(int)const;
+    void update_Price();
+    void add_Side_Item(string);
+    
+    void setMeal_Id(int);
+    void setName(string);
+    void setPrice(float);
+    void setMeal_Type(int);
+    void setItem(string);
+
+    int getMeal_Id()const;
+    string getName()const;
+    float getPrice()const;
+    Meal_type getMeal_type(int)const;
+    void getItem()const;
+    
 };
-void Meal::print()const {
-    cout << getmi() << '\t'
-        << getn() << '\t'
-        << getp() << '\t';
+void Meal::print(int n)const {
+    cout << getMeal_Id() << '\t'
+        << getName() << '\t'
+        << getPrice() << '\t'
+        << getMeal_type(n) << '\t';
+    getItem();
 
         
 }
-void Meal::update_price(float p) {
+void Meal::update_Price() {
     cout << "Enter new price:";
-    cin >> price;
-    setp(price);
+    cin >> this->price;
+    setPrice(price);
 }
-void Meal::add_side_item(string i) {
-    setitem(i);
+void Meal::add_Side_Item(string item) {
+    setItem(item);
 }
-void Meal::setmi(int m) {
+void Meal::setMeal_Id(int m) {
     if (m > 0)
         meal_id = m;
     else{
@@ -112,28 +116,38 @@ void Meal::setmi(int m) {
             << "try again";
     }
 }
-void Meal::setn(string n) {
-    name = n;
+void Meal::setName(string name) {
+    this->name = name;
 }
-void Meal::setp(float p) {
-    if (p >= 0)
-        price = p;
+void Meal::setPrice(float price) {
+    if (price >= 0)
+        this->price = price;
     else
         cout << "price is invalid";
 }
-void Meal::setmt(string m) {
-    
+void Meal::setMeal_Type(int n) {
+    switch (n)
+    {
+    case 1:meal_type(breakfast);
+        break;
+    case 2:meal_type(lunch);
+        break;
+    case 3:meal_type(dinner);
+        break;
+    default:cout << "invalid";
+        break;
+    }
 }
-void Meal::setitem(string m) {
-
+void Meal::setItem(string item) {
+    side_items.push_back(item);
 }
-int Meal::getmi()const {
+int Meal::getMeal_Id()const {
     return meal_id;
 }
-string Meal::getn()const {
+string Meal::getName()const {
     return name;
 }
-float Meal::getp()const {
+float Meal::getPrice()const {
     return price;
 }
 Meal_type Meal::getMeal_type(int n)const {
@@ -152,8 +166,10 @@ Meal_type Meal::getMeal_type(int n)const {
         break;
     }
 }
-string Meal::geti(int n)const {
-    return side_items[n];
+void Meal::getItem()const {
+    for (int i = 0; i < side_items.size(); i++) {
+        cout << side_items[i] << ",";
+    }
 }
 
 
