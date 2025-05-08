@@ -7,54 +7,55 @@ enum Meal_type { breakfast, lunch, dinner };
 enum Status { FAILED, CANCELLED, SUCCESS };
 class DiningHall {
 
-public:
-    DiningHall(){}
-    void print()const;
-
-    void seth(int);
-    void setn(string);
-    void seta(string);
-    void setc(int);
-
-    int geth()const;
-    string getn()const;
-    string geta()const;
-    int getc()const;
-
 private:
     int hall_id;
     string name;
     string address;
     int capacity;
+
+public:
+    DiningHall(){}
+    void print()const;
+
+    void setHall_Id(int);
+    void setName(string);
+    void setAddress(string);
+    void setCapacity(int);
+
+    int getHall_Id()const;
+    string getName()const;
+    string getAddress()const;
+    int getCapacity()const;
+
 };
 void DiningHall::print()const{
-    cout << geth() << '\t'
+    cout << getHall_Id() << '\t'
         << getn() << '\t'
         << geta() << '\t'
         << getc() << '\t';
 }
-void DiningHall::seth(int h) {
-    hall_id = h;
+void DiningHall::setHall_Id(int hall) {
+    hall_id = hall;
 }
-void DiningHall::setn(string n) {
-    name = n;
+void DiningHall::setName(string name) {
+    this->name = name;
 }
-void DiningHall::seta(string a){
-    address = a;
+void DiningHall::setAddress(string address){
+    this->address = address;
 }
-void DiningHall::setc(int c) {
-    capacity = c;
+void DiningHall::setCapacity(int capacity) {
+    this->capacity = capacity;
 }
-int DiningHall::geth()const {
+int DiningHall::getHall_Id()const {
     return hall_id;
 }
-string DiningHall::getn()const {
+string DiningHall::getName()const {
     return name;
 }
-string DiningHall::geta()const{
+string DiningHall::getAddress()const{
     return address;
 }
-int DiningHall::getc()const {
+int DiningHall::getCapacity()const {
     return capacity;
 }
 
@@ -236,22 +237,24 @@ class Student {
 public:
     Student() {}
     void print()const;
-    void reserve_meal(Meal);
+    void reserve_meal(Meal &);
     bool cancel_reservation(Reservation);
 
     void setui(int);
-    void setsi(string);
+    void setstudent_id(string);
     void setn(string);
     void sete(string);
     void setb(float);
     void seta(bool);
 
-    int getui()const;
-    string getsi()const;
-    string getn()const;
-    string gete()const;
-    float getb()const;
-    bool geta()const;
+    int getuser_id()const;
+    string getstudent_id()const;
+    string getname()const;
+    string getemail()const;
+    float getbalance()const;
+    bool getactive()const;
+
+
 
 private:
     int user_id;
@@ -263,7 +266,18 @@ private:
     vector<Reservation> reservation;
 
 };
-
+void Student::print()const {
+    cout << getuser_id() << '\t'
+        << getstudent_id() << '\t'
+        << getname() << '\t'
+        << getemail() << '\t'
+        << getbalance() << '\t'
+        << getactive() << '\t';
+        
+}
+void Student::reserve_meal(Meal& m) {
+    
+}
 
 
 int main()
