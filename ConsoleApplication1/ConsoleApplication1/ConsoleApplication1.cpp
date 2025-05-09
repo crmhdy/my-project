@@ -69,7 +69,7 @@ private:
     int meal_id;
     string name;
     float price;
-    enum meal_type;
+    Meal_type meal_type;
     vector<string> side_items;
 
 public:
@@ -129,11 +129,11 @@ void Meal::setPrice(float price) {
 void Meal::setMeal_Type(int n) {
     switch (n)
     {
-    case 1:meal_type(breakfast);
+    case 1:meal_type=Breakfast;
         break;
-    case 2:meal_type(lunch);
+    case 2:meal_type=Lunch;
         break;
-    case 3:meal_type(dinner);
+    case 3:meal_type=Dinner;
         break;
     default:cout << "invalid";
         break;
@@ -185,7 +185,7 @@ private:
     Student student;
     DiningHall dhall;
     Meal meal;
-    enum status;
+    Status status;
     time_t created_at;
 
 public:
@@ -252,28 +252,9 @@ time_t Reservation::getTime()const {
 }
 
 class Student {
-public:
-    Student() {}
-    void print()const;
-    void reserve_meal(Meal &);
-    bool cancel_reservation(Reservation);
-
-    void setui(int);
-    void setstudent_id(string);
-    void setn(string);
-    void sete(string);
-    void setb(float);
-    void seta(bool);
-
-    int getuser_id()const;
-    string getstudent_id()const;
-    string getname()const;
-    string getemail()const;
-    float getbalance()const;
-    bool getactive()const;
-
-
-
+    friend void reserveMeal(Meal &,Student&);
+    friend bool cancel_Reservation(Reservation&, Student&);
+    
 private:
     int user_id;
     string student_id;
@@ -281,21 +262,93 @@ private:
     string email;
     float balance;
     bool is_active;
+    int reserve = 0;
     vector<Reservation> reservation;
+
+public:
+    Student() {}
+    void print()const;
+
+    void setUser_Id(int);
+    void setStudent_Id(string);
+    void setName(string);
+    void setEmail(string);
+    void setBalance(float);
+    void setActive(bool);
+    void setReserve(int);
+    
+
+    int getUser_Id()const;
+    string getStudent_Id()const;
+    string getName()const;
+    string getEmail()const;
+    float getBalance()const;
+    bool getActive()const;
+    int getReserve()const;
+
+
 
 };
 void Student::print()const {
-    cout << getuser_id() << '\t'
-        << getstudent_id() << '\t'
-        << getname() << '\t'
-        << getemail() << '\t'
-        << getbalance() << '\t'
-        << getactive() << '\t';
-        
+    cout << getUser_Id() << '\t'
+        << getStudent_Id() << '\t'
+        << getName() << '\t'
+        << getEmail() << '\t'
+        << getBalance() << '\t'
+        << getActive() << '\t';
 }
-void Student::reserve_meal(Meal& m) {
-    
+void reserveMeal(Meal& m, Student& s) {
+    setMeal(m, s.reservation[s.reserve]);
 }
+bool cancel_Reservation(Reservation& r, Student& s){
+    auto it = find(s.reservation.begin(), s.reservation.end(), r);
+    if (it != s.reservation.end()) {
+        s.reservation.erase(it);
+    }
+}
+void Student::setUser_Id(int user_id) {
+    this->user_id = user_id;
+}
+void Student::setStudent_Id(string student_id) {
+    this->student_id = student_id;
+}
+void Student::setName(string name) {
+    this->name = name;
+}
+void Student::setEmail(string email) {
+    this->email = email;
+}
+void Student::setBalance(float balance) {
+    this->balance = balance;
+}
+void Student::setActive(bool active) {
+    is_active = active;
+}
+void Student::setReserve(int reserve) {
+    this->reserve = reserve;
+}
+int Student::getUser_Id()const {
+    return user_id;
+}
+string Student::getStudent_Id()const {
+    return student_id;
+}
+string Student::getName()const {
+    return name;
+}
+string Student::getEmail()const {
+    return email;
+}
+float Student::getBalance()const {
+    return balance;
+}
+bool Student::getActive()const {
+    return is_active;
+}
+int Student::getReserve()const {
+    return reserve;
+}
+
 
 
 int main()
