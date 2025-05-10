@@ -7,6 +7,61 @@ class Student;
 enum Meal_type { Breakfast, Lunch, Dinner };
 enum Status { Failed, Cancelled, Success };
 
+class User {
+
+private:
+    int user_id;
+    string name;
+    string last_name;
+    string hashed_password;
+
+public:
+    virtual void print()const;
+    virtual void getType();
+    
+    void setUser_Id(int);
+    void setName(string);
+    void setLast_Name(string);
+    void setHashed_Password(string);
+
+    int getUser_Id()const;
+    string getName()const;
+    string getLast_Name()const;
+    string getHashed_Password()const;
+
+
+};
+void User::print()const {
+    cout << getUser_Id() << '\t'
+        << getName() << '\t'
+        << getLast_Name() << '\t'
+        << getHashed_Password() << '\n';
+}
+void User::setUser_Id(int user_id) {
+    this->user_id = user_id;
+
+}
+void User::setName(string name) {
+    this->name = name;
+}
+void User::setLast_Name(string last_name) {
+    this->last_name = last_name;
+}
+void User::setHashed_Password(string hashed_password) {
+    this->hashed_password = hashed_password;
+}
+int User::getUser_Id()const {
+    return user_id;
+}
+string User::getName()const {
+    return name;
+}
+string User::getLast_Name()const {
+    return last_name;
+}
+string User::getHashed_Password()const {
+    return hashed_password;
+}
 
 class DiningHall {
 
@@ -251,7 +306,7 @@ time_t Reservation::getTime()const {
     return created_at;
 }
 
-class Student {
+class Student:public User {
     friend void reserveMeal(Meal &,Student&);
     friend bool cancel_Reservation(Reservation&, Student&);
     
@@ -267,6 +322,7 @@ private:
 
 public:
     Student() {}
+    Student& operator=(const Student&);
     void print()const;
 
     void setUser_Id(int);
@@ -349,6 +405,29 @@ int Student::getReserve()const {
     return reserve;
 }
 
+
+class Admin :public User {
+
+private:
+
+public:
+    void print()const;
+    void getType();
+
+};
+class Panel {
+
+private:
+
+
+public:
+    void action(int);
+    void showMenu();
+    void showStudent_Info();
+    void checkBalance();
+    
+
+};
 
 
 int main()
