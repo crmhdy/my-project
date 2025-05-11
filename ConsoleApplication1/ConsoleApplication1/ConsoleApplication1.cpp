@@ -3,9 +3,11 @@
 #include <time.h>
 using namespace std;
 
+class Reservation;
 class Student;
 enum Meal_type { Breakfast, Lunch, Dinner };
 enum Status { Failed, Cancelled, Success };
+
 
 class User {
 
@@ -425,9 +427,39 @@ public:
     void showMenu();
     void showStudent_Info();
     void checkBalance();
-    
+    void viewReservations();
+    void addReservation(Reservation);
+    void addToShoppingCart();
+    void confirmShoppingCart();
+    void removeShopping_Cart_Item();
+    void increaseBalance();
+    void viewRecent_Transactions();
+    void cancelReservation(int);
+    void exit();
 
 };
+
+class Storage {
+
+private:
+    
+    int meal_id_counter;
+    int dining_hall_id_counter;
+    vector<Meal> all_meals;
+    vector<DiningHall> all_dining_halls;
+
+    Storage();
+    Storage(const Storage&)  = delete;
+    Storage operator=(const Storage&) = delete;
+
+public:
+    static Storage& instance();
+
+};
+Storage& Storage::instance() {
+    static Storage instance;
+    return instance;
+}
 
 
 int main()
