@@ -317,15 +317,21 @@ private:
     string student_id;
     string name;
     string email;
+    string phone;
     float balance;
     bool is_active;
     int reserve = 0;
     vector<Reservation> reservation;
 
+
 public:
     Student() {}
     Student& operator=(const Student&);
     void print()const;
+    vector<Reservation>getReserve();
+    void activate();
+    void deactivate();
+    void getType();
 
     void setUser_Id(int);
     void setStudent_Id(string);
@@ -342,7 +348,7 @@ public:
     string getEmail()const;
     float getBalance()const;
     bool getActive()const;
-    int getReserve()const;
+    int getreserve()const;
 
 
 
@@ -456,6 +462,7 @@ public:
     static Storage& instance();
 
 };
+
 Storage& Storage::instance() {
     static Storage instance;
     return instance;
