@@ -254,6 +254,7 @@ reserveday Meal::getReserve_Day()const {
     return reserve_day;
 }
 
+
 class Reservation {
 
     friend void setDiningHall(DiningHall*, Reservation &);
@@ -283,8 +284,8 @@ public:
 };
 void Reservation::print()const {
     cout << getReservation_Id() << '\t';
-    (*dhall).print();
-    (*meal).print(7);
+    meal->print(7);
+    dhall->print();
     cout << getTime() << '\n';
 }
 bool Reservation::cancel() {
@@ -295,7 +296,6 @@ bool Reservation::cancel() {
 void Reservation::setReservation_Id(int r) {
     reservation_id = r;
 }
-
 void setDiningHall(DiningHall* d, Reservation& R) {
     R.dhall = d;
 }
@@ -326,6 +326,9 @@ Status Reservation::getStatus(int n)const {
 }
 time_t Reservation::getTime()const {
     return created_at;
+}
+void Reservation::setStatus(Status s) {
+    status = s;
 }
 
 class Student:public User {
