@@ -3,11 +3,9 @@
 #include <time.h>
 using namespace std;
 
-class Reservation;
-class Student;
 enum Meal_type { Breakfast, Lunch, Dinner };
 enum Status { Failed, Cancelled, Success };
-
+enum reserveday{ Saturday ,Sunday,Monday,Tuesday,Wednesday,Thursday,Friday};
 
 class User {
 
@@ -63,6 +61,9 @@ string User::getLast_Name()const {
 }
 string User::getHashed_Password()const {
     return hashed_password;
+}
+void User::getType() {
+    cout << "user";
 }
 
 class DiningHall {
@@ -126,26 +127,34 @@ private:
     int meal_id;
     string name;
     float price;
+    bool is_active;
     Meal_type meal_type;
+    reserveday reserve_day;
     vector<string> side_items;
 
 public:
     Meal(){}
     void print(int)const;
-    void update_Price();
+    void update_Price(float);
     void add_Side_Item(string);
+    bool isActive();
+    void activate();
+    void deactivate();
     
     void setMeal_Id(int);
     void setName(string);
     void setPrice(float);
     void setMeal_Type(int);
     void setItem(string);
+    void setReserve_Day(reserveday);
 
     int getMeal_Id()const;
     string getName()const;
     float getPrice()const;
     Meal_type getMeal_type(int)const;
     void getItem()const;
+    reserveday getReserve_Day()const;
+
     
 };
 void Meal::print(int n)const {
@@ -157,7 +166,7 @@ void Meal::print(int n)const {
 
         
 }
-void Meal::update_Price() {
+void Meal::update_Price(float p) {
     cout << "Enter new price:";
     cin >> this->price;
     setPrice(price);
@@ -173,6 +182,15 @@ void Meal::setMeal_Id(int m) {
         cout << "your id is invalid,"
             << "try again";
     }
+}
+bool Meal::isActive() {
+    return is_active;
+}
+void Meal::activate() {
+    is_active = true;
+}
+void Meal::deactivate() {
+    is_active = false;
 }
 void Meal::setName(string name) {
     this->name = name;
@@ -198,6 +216,9 @@ void Meal::setMeal_Type(int n) {
 }
 void Meal::setItem(string item) {
     side_items.push_back(item);
+}
+void Meal::setReserve_Day(reserveday r) {
+    reserve_day = r;
 }
 int Meal::getMeal_Id()const {
     return meal_id;
@@ -229,19 +250,20 @@ void Meal::getItem()const {
         cout << side_items[i] << ",";
     }
 }
-
+reserveday Meal::getReserve_Day()const {
+    return reserve_day;
+}
 
 class Reservation {
 
-    friend void setStudent(Student&, Reservation&);
-    friend void setDiningHall(DiningHall&, Reservation &);
-    friend void setMeal(Meal&, Reservation&);
+    friend void setDiningHall(DiningHall*, Reservation &);
+    friend void setMeal(Meal*, Reservation&);
     friend void setTime(time_t&, Reservation&);
+
 private:
     int reservation_id;
-    Student student;
-    DiningHall dhall;
-    Meal meal;
+    DiningHall* dhall;
+    Meal* meal;
     Status status;
     time_t created_at;
 
@@ -251,6 +273,7 @@ public:
     bool cancel();
 
     void setReservation_Id(int);
+    void setStatus(Status);
 
     int getReservation_Id()const;
     Status getStatus(int)const;
@@ -260,9 +283,8 @@ public:
 };
 void Reservation::print()const {
     cout << getReservation_Id() << '\t';
-    student.print();
-    dhall.print();
-    meal.print(7);
+    (*dhall).print();
+    (*meal).print(7);
     cout << getTime() << '\n';
 }
 bool Reservation::cancel() {
@@ -273,13 +295,11 @@ bool Reservation::cancel() {
 void Reservation::setReservation_Id(int r) {
     reservation_id = r;
 }
-void setStudent(Student& s, Reservation& R) {
-    R.student = s;
-}
-void setDiningHall(DiningHall& d, Reservation& R) {
+
+void setDiningHall(DiningHall* d, Reservation& R) {
     R.dhall = d;
 }
-void setMeal(Meal& m, Reservation& R) {
+void setMeal(Meal* m, Reservation& R) {
     R.meal = m;
 }
 void setTime(time_t& t, Reservation& R) {
@@ -362,7 +382,7 @@ void Student::print()const {
         << getActive() << '\t';
 }
 void reserveMeal(Meal& m, Student& s) {
-    setMeal(m, s.reservation[s.reserve]);
+    setMeal(&m, s.reservation[s.reserve]);
 }
 bool cancel_Reservation(Reservation& r, Student& s){
     auto it = find(s.reservation.begin(), s.reservation.end(), r);
@@ -409,7 +429,7 @@ float Student::getBalance()const {
 bool Student::getActive()const {
     return is_active;
 }
-int Student::getReserve()const {
+int Student::getreserve()const {
     return reserve;
 }
 

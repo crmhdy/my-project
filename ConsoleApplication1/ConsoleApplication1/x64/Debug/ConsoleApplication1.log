@@ -1,4 +1,20 @@
 ﻿  ConsoleApplication1.cpp
-C:\Users\fara\Desktop\mp\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(241,13): error C2079: 'Reservation::student' uses undefined class 'Student'
-C:\Users\fara\Desktop\mp\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(276,17): error C2027: use of undefined type 'Student'
-C:\Users\fara\Desktop\mp\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(7,7): message : see declaration of 'Student'
+C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.34.31933\include\xutility(5119,21): error C2676: binary '==': 'Reservation' does not define this operator or a conversion to a type acceptable to the predefined operator
+C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.34.31933\include\xutility(3578,5): message : could be 'bool std::operator ==(const std::move_iterator<_Iter> &,const std::move_iterator<_Iter2> &) noexcept(<expr>)'
+C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.34.31933\include\xutility(5119,13): message : 'bool std::operator ==(const std::move_iterator<_Iter> &,const std::move_iterator<_Iter2> &) noexcept(<expr>)': could not deduce template argument for 'const std::move_iterator<_Iter> &' from 'Reservation'
+C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.34.31933\include\xutility(1396,5): message : or       'bool std::operator ==(const std::reverse_iterator<_BidIt> &,const std::reverse_iterator<_BidIt2> &) noexcept(<expr>)'
+C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.34.31933\include\xutility(5119,13): message : 'bool std::operator ==(const std::reverse_iterator<_BidIt> &,const std::reverse_iterator<_BidIt2> &) noexcept(<expr>)': could not deduce template argument for 'const std::reverse_iterator<_BidIt> &' from 'Reservation'
+C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.34.31933\include\utility(365,27): message : or       'bool std::operator ==(const std::pair<_Ty1,_Ty2> &,const std::pair<_Ty1,_Ty2> &)'
+C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.34.31933\include\xutility(5119,13): message : 'bool std::operator ==(const std::pair<_Ty1,_Ty2> &,const std::pair<_Ty1,_Ty2> &)': could not deduce template argument for 'const std::pair<_Ty1,_Ty2> &' from 'Reservation'
+C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.34.31933\include\xutility(5128,86): message : see reference to function template instantiation '_InIt std::_Find_unchecked<Reservation*,_Ty>(_InIt,const _InIt,const _Ty &)' being compiled
+          with
+          [
+              _InIt=Reservation *,
+              _Ty=Reservation
+          ]
+C:\Users\fara\Desktop\mp\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(374,65): message : see reference to function template instantiation '_InIt std::find<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<_Ty>>>,Reservation>(_InIt,const _InIt,const _Ty &)' being compiled
+          with
+          [
+              _InIt=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<Reservation>>>,
+              _Ty=Reservation
+          ]
