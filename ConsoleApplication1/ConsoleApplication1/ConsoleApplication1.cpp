@@ -349,9 +349,7 @@ private:
 
 public:
     Student() {}
-    Student& operator=(const Student&);
     void print()const;
-    vector<Reservation>getReserve();
     void activate();
     void deactivate();
     void getType();
@@ -372,6 +370,7 @@ public:
     float getBalance()const;
     bool getActive()const;
     int getreserve()const;
+    vector<Reservation>getReserve();
 
 
 
@@ -383,6 +382,15 @@ void Student::print()const {
         << getEmail() << '\t'
         << getBalance() << '\t'
         << getActive() << '\t';
+}
+void Student::activate() {
+    is_active = true;
+}
+void Student::deactivate() {
+    is_active = false;
+}
+void Student::getType() {
+    cout << "student";
 }
 void reserveMeal(Meal& m, Student& s) {
     setMeal(&m, s.reservation[s.reserve]);
@@ -434,6 +442,9 @@ bool Student::getActive()const {
 }
 int Student::getreserve()const {
     return reserve;
+}
+vector<Reservation> Student::getReserve() {
+    return reservation;
 }
 
 
