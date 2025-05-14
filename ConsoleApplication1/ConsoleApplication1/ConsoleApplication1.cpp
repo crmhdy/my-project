@@ -593,6 +593,28 @@ namespace AdminSession {
         static SessionManager instance();
            
     };
+}namespace StudentSession {
+    class SessionManger : public SessionBase {
+        
+    private:
+        Student* current_student;
+        ShoppingCart* shopping_cart;
+        int student_id;
+        
+        void load_Session()override;
+        void save_Session()override;
+
+    public:
+        void login(string, string)override;
+        void logout()override;
+        Student current_Student();
+        ShoppingCart shopping_Cart();
+
+        int getStudent_Id()const;
+
+        static SessionManger instance();
+
+    };
 }
 
 int main()
