@@ -574,7 +574,26 @@ public:
     SessionStatus getStatus()const;
 
 };
-
+namespace AdminSession {
+    class SessionManager : public SessionBase {
+        
+    private:
+        Admin* currentAdmin;
+        int admin_id;
+        void load_Session()override;
+        void save_Session()override;
+
+    public:
+        void login(string, string);
+        void logout()override;
+        Admin current_Admin();
+
+        int getAdmin_Id()const;
+        
+        static SessionManager instance();
+           
+    };
+}
 
 int main()
 {
