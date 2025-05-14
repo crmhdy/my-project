@@ -3,9 +3,14 @@
 #include <time.h>
 using namespace std;
 
+class Transaction;
+
 enum Meal_type { Breakfast, Lunch, Dinner };
-enum Status { Failed, Cancelled, Success };
+enum Status { failed, Cancelled, Success };
 enum reserveday{ Saturday ,Sunday,Monday,Tuesday,Wednesday,Thursday,Friday};
+enum TransactionType{Transfer,Payment};
+enum TransactionStatus{Pending,Completed,Failed};
+enum SessionStatus{Authenticated,Anonymous};
 
 class User {
 
@@ -311,7 +316,7 @@ int Reservation::getReservation_Id()const {
 Status Reservation::getStatus(int n)const {
     switch (n)
     {
-    case 1:return Failed;
+    case 1:return failed;
         break;
 
     case 2:return Cancelled;
@@ -502,6 +507,74 @@ Storage& Storage::instance() {
     return instance;
 }
 
+
+class ShoppingCart {
+
+private:
+    vector<Reservation>reservations;
+
+public:
+    Transaction confirm();
+    void add_Reservation(Reservation reservation);
+    void remove_Reservation(int);
+    void view_Shopping_Cart_Item();
+    void clear();
+    vector<Reservation>getReservation()const;
+
+};
+
+class Transaction {
+
+private:
+    int transaction_id;
+    string tracking_code;
+    float amount;
+    TransactionType type;
+    TransactionStatus status;
+    time_t created_at;
+
+public:
+
+    Transaction();
+    
+    void setTransaction_Id(int);
+    void setTracking_code(string);
+    void setAmount();
+    void setType(TransactionType);
+    void setStatus(TransactionStatus);
+    void setTime(time_t);
+
+    int getTransaction_Id()const;
+    string getTracking_Code()const;
+    float getAmount()const;
+    TransactionType getType()const;
+    TransactionStatus getStatus()const;
+    time_t getTime()const;
+};
+
+class SessionBase {
+
+protected:
+    time_t created_at;
+    time_t lasttime_login;
+    SessionStatus Status;
+    virtual void load_Session() = 0;
+    virtual void save_Session() = 0;
+
+public:
+    virtual void login(string, string) = 0;
+    virtual void logout() = 0;
+
+    void setCreated(time_t);
+    void setLasttime(time_t);
+    void setSession_Status(SessionStatus);
+
+    time_t getCreated()const;
+    time_t getLasttime()const;
+    SessionStatus getStatus()const;
+
+};
+
 
 int main()
 {
